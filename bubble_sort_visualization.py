@@ -55,7 +55,13 @@ def foo():
                     heights[j+1].setFill("white")
                     heights[j], heights[j+1] = heights[j+1], heights[j]
 
+
+
+#---------------------------------------------------------------------------------------------------
     # elif ent.getText() == "insertionsort":
+    #     ent.undraw()
+    #     text.undraw()
+    #     # Insertion Sort Visualization
     #     for i in range(1, len(heights)):
     #         key = heights[i]
 
