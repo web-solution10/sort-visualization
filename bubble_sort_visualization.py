@@ -28,10 +28,14 @@ def foo():
     ent = Entry(Point(100,180),50)
     ent.setText("bubblesort")
     ent.draw(win)
+    text = Text(Point(100,170),"Type! Then, do a mouse-click 🖱👆")
+    text.setStyle("bold")
+    text.draw(win)
     
     win.getMouse()
     if ent.getText() == "bubblesort":
         ent.undraw()
+        text.undraw()
         # Bubble Sort Visualization
         n = len(heights)
         for i in range(n):
