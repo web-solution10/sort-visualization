@@ -6,6 +6,7 @@ win = GraphWin('bubble_sort_visualization', 1000, 500)
 win.setCoords(0, 0, 200, 200)
 
 # Generating Random List
+# heights = [20,30,10,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200]
 heights = []
 while True:
     r = random.randrange(10,210,10)
@@ -26,7 +27,7 @@ for i in range(len(heights)):
 
 def foo():
     ent = Entry(Point(100,180),50)
-    ent.setText("bubblesort")
+    ent.setText("insertionsort")
     ent.draw(win)
     text = Text(Point(100,170),"Type! Then, do a mouse-click 🖱👆")
     text.setStyle("bold")
@@ -58,29 +59,26 @@ def foo():
 
 
 #---------------------------------------------------------------------------------------------------
-    # elif ent.getText() == "insertionsort":
-    #     ent.undraw()
-    #     text.undraw()
-    #     # Insertion Sort Visualization
-    #     for i in range(1, len(heights)):
-    #         key = heights[i]
+    elif ent.getText() == "insertionsort":
+        ent.undraw()
+        text.undraw()
+        # Insertion Sort Visualization
+        for i in range(1, len(heights)):
 
-    #         j = i-1
-    #         while j >= 0 and int(key.getP2().getY()) < int(heights[j].getP2().getY()) :
+            key = heights[i]
+            j = i-1
 
-    #                 for i in range(5):
-    #                     time.sleep(0.05)
-    #                     heights[j+1].move(-2,0)
+            while j >= 0 and int(key.getP2().getY()) < int(heights[j].getP2().getY()) :
 
-    #                 heights[j + 1] = heights[j]
-    #                 j -= 1
+                    heights[j + 1] = heights[j]
+                    j -= 1
+                    for i in range(5):
+                        time.sleep(0.05)
+                        key.move(-2,0)
+                        heights[j+1].move(2,0)
 
-    #         for i in range(5):
-    #             time.sleep(0.05)
-    #             heights[j+1].move(2,0)
-    #             key.move(2,0)
-
-    #         heights[j + 1] = key
+            heights[j + 1] = key
+    print(heights[0])
 
 
 
