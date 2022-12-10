@@ -78,8 +78,12 @@ def foo():
                         heights[j+1].move(2,0)
 
             heights[j + 1] = key
-    print(heights[0])
-
+#---------------------------------------------------------------------------------------------------
+    elif ent.getText() == "insertionsort":
+        ent.undraw()
+        text.undraw()
+        # Merge Sort Visualization
+        
 
 
 
