@@ -83,12 +83,21 @@ def bubble(data, drawData):
 	duration = "Duration Time: " + str(end - start) + " seconds"
 
 
-	lable= Label(Mainframe, text=duration, bg="Red")
-	lable.grid(row=2, columnspan=4, padx=5, pady=5)
+	label= Label(Mainframe, text=duration, bg="Red")
+	label.grid(row=2, columnspan=4, padx=5, pady=5)
 
 	# sorted elements generated with Green color
 	drawData(data, ['Green' for x in range(len(data))])
 
+	if casemenu.get() == "average-case":
+		complexity = "Time Complexity: Θ(n²)"
+	elif casemenu.get() == "worst-case":
+		complexity = "Time Complexity: O(n²)"
+	elif casemenu.get() == "best-case":
+		complexity = "Time Complexity: Ω(n²)"
+
+	timeComplexity= Label(Mainframe, text=complexity, bg="Red")
+	timeComplexity.grid(row=3, columnspan=4, padx=5, pady=5)
 
 def start_algorithm():
 	global data
@@ -103,9 +112,9 @@ Mainframe.grid(row=0, column=0, padx=10, pady=5)
 canvas = Canvas(root, width=900, height=480, bg="Grey")
 canvas.grid(row=1, column=0, padx=10, pady=5)
 
-Button(Mainframe, text="Generate", bg="Red", command=generate).grid(row=1, column=2, padx=5, pady=5)
+Button(Mainframe, text="Generate", bg="Red", command=generate).grid(row=1, column=1, padx=5, pady=5)
 
-Button(Mainframe, text="START", bg="Blue", command=start_algorithm).grid(row=1, column=3, padx=5, pady=5)
+Button(Mainframe, text="SORT!", bg="Yellow", command=start_algorithm).grid(row=1, column=3, padx=5, pady=5)
 
 casemenu = ttk.Combobox(Mainframe, textvariable=select_case, values=["average-case","best-case","worst-case"])
 casemenu.grid(row=0, columnspan=4, padx=5, pady=5)
