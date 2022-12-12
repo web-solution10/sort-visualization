@@ -5,7 +5,7 @@ import time
 
 root = Tk()
 root.title("Bubble Sort Visualizer")
-root.maxsize(1000, 600)
+root.maxsize(1000, 700)
 root.config(bg="Black")
 select_case = StringVar()
 data = []
@@ -94,7 +94,7 @@ def bubble(data, drawData):
 	elif casemenu.get() == "worst-case":
 		complexity = "Time Complexity: O(n²)"
 	elif casemenu.get() == "best-case":
-		complexity = "Time Complexity: Ω(n²)"
+		complexity = "Time Complexity: Ω(n)"
 
 	timeComplexity= Label(Mainframe, text=complexity, bg="Red")
 	timeComplexity.grid(row=3, columnspan=4, padx=5, pady=5)
