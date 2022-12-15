@@ -2,6 +2,8 @@ from tkinter import *
 from tkinter import ttk
 import random
 import time
+import quicksort
+import bubblesort
 
 root = Tk()
 root.title("Bubble Sort Visualizer")
@@ -15,7 +17,7 @@ def generate():
 	if casemenu.get() == "worst-case":
 		data = [i for i in range(20,0,-1)] # --> worst case
 	#----------------------------------------------------------------
-	if casemenu.get() == "average-case":
+	if casemenu.get() == "average-case(without repitition)":
 		# without repetition
 		while True:
 			r = random.randrange(1,21,1)
@@ -24,9 +26,10 @@ def generate():
 			if len(data) == 20:
 				break
 													# # --> average case
+	if casemenu.get() == "average-case(with repitition)":
 		# # with repetition
-		# for i in range(20):
-		# 	data.append(random.randrange(1,21))
+		for i in range(20):
+			data.append(random.randrange(1,21))
 	#----------------------------------------------------------------
 	if casemenu.get() == "best-case":
 		data = [i for i in range(0,21)] # --> best case
@@ -62,45 +65,58 @@ def drawData(data, colorlist):
 	root.update_idletasks()
 
 
-def bubble(data, drawData):
-	n = len(data)
-	
-	start = time.time()
+def quick_colors():
+    colors_list = ['#F4D35E','#F95738','#D90429','#2B2D42','#B04AFA','#1b998b']
+    name_list = ['unsorted:' , 'sorted:' ,'tail:' , 'index:' , 'pivot:' ,'swap:']
+    x = 1
+    for i in range (len(colors_list)):
 
-	for i in range(n):
-		for j in range(0, n-i-1):
-	
-			if data[j] > data[j+1]:
-				data[j], data[j+1] = data[j+1], data[j]
-	
-				# if swapped then color becomes Green else stays Red
-				drawData(data, ['Green' if x == j + 1 else 'Red' for x in range(len(data))])
-
-				time.sleep(0.05) # Sorting speed
-
-	end = time.time()
-	duration = "Duration Time: " + str(end - start) + " seconds"
+        colors = Frame(colors_key, width=25, height=25, bg=colors_list[i])
+        colors.grid(row=2, column=x, padx=10, pady=5)
+        
+        names1 = Label(colors_key, text=name_list[i], bg='#FAF0CA')
+        names1.grid(row=2, column=x-1,padx=10,pady=5)
+        i = i+1
+        x = x+5
 
 
-	label= Label(Mainframe, text=duration, bg="Red",font="Times 12 bold")
-	label.grid(row=2, columnspan=4, padx=5, pady=5)
 
-	# sorted elements generated with Green color
-	drawData(data, ['Green' for x in range(len(data))])
-
-	if casemenu.get() == "average-case":
-		complexity = "Time Complexity: Θ(n²)"
-	elif casemenu.get() == "worst-case":
-		complexity = "Time Complexity: O(n²)"
-	elif casemenu.get() == "best-case":
-		complexity = "Time Complexity: Ω(n)"
-
-	timeComplexity= Label(Mainframe, text=complexity, bg="Green",font="Times 12 bold")
-	timeComplexity.grid(row=2, column=5, padx=5, pady=5)
-
-def start_algorithm():
+def sort_algorithm():
 	global data
-	bubble(data, drawData)
+	if not data:
+		return
+	
+	if sortmenu.get() == "quick_sort":
+		quick_colors()
+		quicksort.quick_sort(data, 0, len(data)-1, drawData)
+
+		label= Label(timeFrame, text=quicksort.duration_time(), bg="Red", font="Times 12 bold")
+		label.grid(row=0, column=0, padx=5, pady=5)
+		if casemenu.get() == "worst-case":
+			complexity = "Time Complexity: O(n²)"
+		elif casemenu.get() == "best-case":
+			complexity = "Time Complexity: Ω(n*log(n))"
+		else:
+			complexity = "Time Complexity: Θ(n*log(n))"
+
+		timeComplexity= Label(timeFrame, text=complexity, bg="Green",font="Times 12 bold")
+		timeComplexity.grid(row=0, column=1, padx=5, pady=5)
+
+
+	if sortmenu.get() == 'bubble_sort':
+		bubblesort.bubble_sort(data, drawData)
+		label= Label(timeFrame, text=bubblesort.duration_time(), bg="Red", font="Times 12 bold")
+		label.grid(row=0, column=0, padx=5, pady=5)
+		if casemenu.get() == "worst-case":
+			complexity = "Time Complexity: O(n²)"
+		elif casemenu.get() == "best-case":
+			complexity = "Time Complexity: Ω(n)"
+		else:
+			complexity = "Time Complexity: Θ(n²)"
+
+		timeComplexity= Label(timeFrame, text=complexity, bg="Green",font="Times 12 bold")
+		timeComplexity.grid(row=0, column=1, padx=5, pady=5)
+
 
 
 
@@ -108,21 +124,26 @@ def start_algorithm():
 Mainframe = Frame(root, width=900, height=100, bg="Grey")
 Mainframe.grid(row=0, column=0, padx=10, pady=5)
 
+timeFrame = Frame(root, width=900, height=30, bg="Grey")
+timeFrame.grid(row=1, column=0, padx=10, pady=5)
+
+colors_key = Frame(root, width=900, height=35, bg="Grey")
+colors_key.grid(row=2, column=0, padx=10, pady=5)
+
 canvas = Canvas(root, width=900, height=480, bg="Grey")
-canvas.grid(row=1, column=0, padx=10, pady=5)
+canvas.grid(row=3, column=0, padx=10, pady=5)
 
 Button(Mainframe, text="Generate", bg="Red", command=generate).grid(row=0, column=5, padx=5, pady=5)
 
-Button(Mainframe, text="SORT!", bg="Yellow", command=start_algorithm).grid(row=1, column=5, padx=5, pady=5)
+Button(Mainframe, text="SORT!", bg="Yellow", command=sort_algorithm).grid(row=1, column=5, padx=5, pady=5)
 
 sortmenu = ttk.Combobox(Mainframe, textvariable=StringVar(), values=["bubble_sort","insertion_sort","merge_sort","quick_sort"])
 sortmenu.grid(row=0, columnspan=4, padx=5, pady=5)
-sortmenu.current(0)
+sortmenu.current(3)
 
-casemenu = ttk.Combobox(Mainframe, textvariable=StringVar(), values=["best-case","average-case","worst-case"])
+casemenu = ttk.Combobox(Mainframe, textvariable=StringVar(), values=["best-case","average-case(without repitition)","average-case(with repitition)","worst-case"])
 casemenu.grid(row=1, columnspan=4, padx=5, pady=5)
-casemenu.current(0)
-
+casemenu.current(1)
 
 
 root.mainloop()
