@@ -14,7 +14,7 @@ def bubble_sort(data, drawData):
                 data[j], data[j+1] = data[j+1], data[j]
 
                 # if swapped then color becomes Green else stays Red
-                drawData(data, ['Green' if x == j + 1 else 'Red' for x in range(len(data))])
+                drawData(data, ['Green' if x == j + 1 else '#F4D35E' for x in range(len(data))])
 
                 time.sleep(0.05) # Sorting speed
 

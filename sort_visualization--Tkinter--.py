@@ -34,7 +34,7 @@ def generate():
 	if casemenu.get() == "best-case":
 		data = [i for i in range(0,21)] # --> best case
 
-	drawData(data, ['Red' for x in range(len(data))])
+	drawData(data, ['#F4D35E' for x in range(len(data))])
 
 
 
